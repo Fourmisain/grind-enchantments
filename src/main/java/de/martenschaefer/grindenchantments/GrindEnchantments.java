@@ -1,6 +1,5 @@
 package de.martenschaefer.grindenchantments;
 
-import net.cerulan.fairenchanting.FairEnchanting;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -13,6 +12,7 @@ import net.minecraft.item.Items;
 import net.minecraft.screen.AnvilScreenHandler;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import fourmisain.taxfreelevels.TaxFreeLevels;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -59,10 +59,10 @@ public class GrindEnchantments {
    ItemStack bookItemStack = stack1Book ? itemStack1 : itemStack2;
 
    if (!player.abilities.creativeMode) {
-    if(FabricLoader.getInstance().isModLoaded("fairenchanting"))
-     player.addExperience(-getLevelCost(enchantedItemStack, player));
-    else
-     player.addExperienceLevels(-getLevelCost(enchantedItemStack, player));
+       if (FabricLoader.getInstance().isModLoaded("taxfreelevels"))
+           player.addExperience(-getLevelCost(enchantedItemStack, player));
+       else
+           player.addExperienceLevels(-getLevelCost(enchantedItemStack, player));
    }
    input.setStack(stack1Book ? 1 : 0, grind(enchantedItemStack));
 
@@ -89,7 +89,8 @@ public class GrindEnchantments {
     }
    }
 
-   if(player != null && FabricLoader.getInstance().isModLoaded("fairenchanting")) i = FairEnchanting.getExperienceCostAtLevel(i, i);
+   if (player != null && FabricLoader.getInstance().isModLoaded("taxfreelevels"))
+       i = TaxFreeLevels.getXpDifference(player, 0, i);
 
    return i;
   }
@@ -195,10 +196,10 @@ public class GrindEnchantments {
    }
 
    if (!player.abilities.creativeMode) {
-    if(FabricLoader.getInstance().isModLoaded("fairenchanting"))
-     player.addExperience(-GrindEnchantments.getLevelCost(itemStack1, itemStack2, player));
-    else
-     player.addExperienceLevels(-GrindEnchantments.getLevelCost(itemStack1, itemStack2, player));
+       if (FabricLoader.getInstance().isModLoaded("taxfreelevels"))
+           player.addExperience(-GrindEnchantments.getLevelCost(itemStack1, itemStack2, player));
+       else
+           player.addExperienceLevels(-GrindEnchantments.getLevelCost(itemStack1, itemStack2, player));
    }
    world.syncWorldEvent(1042, blockPos, 0);
   }
@@ -213,7 +214,8 @@ public class GrindEnchantments {
     if (!enchantment.isCursed()) i++;
    }
 
-   if(player != null && FabricLoader.getInstance().isModLoaded("fairenchanting")) i = FairEnchanting.getExperienceCostAtLevel(i, i);
+   if (player != null && FabricLoader.getInstance().isModLoaded("taxfreelevels"))
+       i = TaxFreeLevels.getXpDifference(player, 0, i);
 
    return (int) (i / 2.0 + 0.5);
   }

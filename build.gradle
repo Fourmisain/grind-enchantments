@@ -20,7 +20,7 @@ dependencies {
 	mappings "net.fabricmc:yarn:$project.yarn_mappings:v2"
 	modImplementation "net.fabricmc:fabric-loader:$project.loader_version"
 
-	modCompile "com.github.CerulanLumina:fair-enchanting:$fairenchanting_version"
+	modImplementation "com.github.Fourmisain:TaxFreeLevels:$project.tax_free_levels_version"
 }
 
 processResources {
